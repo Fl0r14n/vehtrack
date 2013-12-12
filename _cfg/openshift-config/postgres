@@ -1,0 +1,16 @@
+PostgreSQL 8.4 database added.  Please make note of these credentials:
+
+   Root User: admin
+   Root Password: s7CkbNUif_B_
+   Database Name: vehtrack
+
+Connection URL: postgresql://$OPENSHIFT_POSTGRESQL_DB_HOST:$OPENSHIFT_POSTGRESQL_DB_PORT/
+PostgreSQL gear-local connection URL: postgresql://$OPENSHIFT_POSTGRESQL_DB_HOST:$OPENSHIFT_POSTGRESQL_DB_PORT/
+
+rhc cartridge list
+rhc cartridge start -a vehtrack -c postgresql-8.4
+rhc cartridge stop -a vehtrack -c postgresql-8.4
+rhc cartridge restart -a vehtrack -c postgresql-8.4
+rhc cartridge reload -a vehtrack -c postgresql-8.4
+rhc cartridge status -a vehtrack -c postgresql-8.4
+rhc cartridge remove -a vehtrack -c postgresql-8.4

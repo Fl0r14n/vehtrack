@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
+  <persistence-unit name="vehtrack">
+    <class>com.rhcloud.application.vehtrack.domain.Account</class>
+    <class>com.rhcloud.application.vehtrack.domain.Device</class>
+    <class>com.rhcloud.application.vehtrack.domain.Event</class>
+    <class>com.rhcloud.application.vehtrack.domain.Fleet</class>
+    <class>com.rhcloud.application.vehtrack.domain.Journey</class>
+    <class>com.rhcloud.application.vehtrack.domain.Position</class>
+    <class>com.rhcloud.application.vehtrack.domain.User</class>
+    <properties>
+      <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL82Dialect"/>
+      <property name="hibernate.hbm2ddl.auto" value="create"/>
+      <property name="hibernate.connection.charSet" value="UTF-8"/>
+    </properties>
+  </persistence-unit>
+</persistence>

@@ -1,0 +1,10 @@
+MIDlet-Name: FwUpDemo
+MIDlet-Version: 1.0.1
+MIDlet-Vendor: Cinterion
+MIDlet-Description: Simple short message sender
+MicroEdition-Profile: IMP-NG
+MicroEdition-Configuration: CLDC-1.1
+MIDlet-1: FwUpDemo, , example.fwupdemo.FwUpDemo
+MIDlet-Jar-URL: http://someserver/somedir/fwupdemo.jad
+MIDlet-Jar-Size: 2265
+

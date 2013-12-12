@@ -1,0 +1,10 @@
+MIDlet-Name: RS232Demo
+MIDlet-Version: 1.0.1
+MIDlet-Vendor: Cinterion
+MIDlet-Description: Simple loopback demo for usage of serial RS232 ports
+MicroEdition-Profile: IMP-NG
+MicroEdition-Configuration: CLDC-1.1
+MIDlet-1: RS232Demo, , example.rs232demo.RS232Demo
+MIDlet-Jar-URL: http://someserver/somedir/rs232demo.jad
+MIDlet-Jar-Size: 2307
+

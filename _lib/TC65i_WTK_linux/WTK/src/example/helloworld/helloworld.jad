@@ -1,0 +1,10 @@
+MIDlet-Name: HelloWorld
+MIDlet-Version: 1.0.1
+MIDlet-Vendor: Cinterion
+MIDlet-Description: Simple example sending "Hello World" to System.Out
+MicroEdition-Profile: IMP-NG
+MicroEdition-Configuration: CLDC-1.1
+MIDlet-1: HelloWorld, , example.helloworld.HelloWorld
+MIDlet-Jar-URL: http://someserver/somedir/helloworld.jad
+MIDlet-Jar-Size: 1487
+

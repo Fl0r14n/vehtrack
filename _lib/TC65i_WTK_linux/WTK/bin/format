@@ -1,0 +1,7 @@
+#!/bin/bash
+#change here if using serial port (ttyS) or usb adaptors (ttyUSB) or other paths (ex: ttyACM)
+ttypath=`ls /dev/ttyUSB? | tail -n 1`
+currentdir=`dirname $(readlink -f $0)`
+echo "Formating module at $ttypath"
+java -jar $currentdir/jObexFTP.jar $ttypath -f
+echo "All done"

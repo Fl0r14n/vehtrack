@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+  <!--
+    If you need to add Converters to the REST exporter to handle the property types you're using
+    in your entities, then just configure a ConversionServiceFactoryBean here, add the Converters
+    you need, and they will, in turn, be added to the FormattingConversionService the REST exporter
+    uses internally.
+
+    Uncomment this block to add the included UUID <-> String converters, which are not included by default.
+  -->
+  <!--
+  <bean class="org.springframework.context.support.ConversionServiceFactoryBean">
+    <property name="converters">
+      <set>
+        <bean class="org.springframework.data.rest.core.convert.StringToUUIDConverter"/>
+        <bean class="org.springframework.data.rest.core.convert.UUIDToStringConverter"/>
+      </set>
+    </property>
+  </bean>
+  -->
+
+  <!--
+    This validator will be picked up automatically. The default configuration is to look at the bean name
+    and figure out what event you're interested in. This validator is interested in 'beforeSave' events
+    because the word 'beforeSave' appears in the first part of the bean name. It recognizes:
+
+      - beforeSave
+      - afterSave
+      - beforeDelete
+      - afterDelete
+      - beforeLinkSave
+      - afterLinkSave
+      - beforeLinkDelete
+      - afterLinkDelete
+
+    What you put after that doesn't matter, you just need to make the bean name unique, of course.
+  -->
+  <bean id="beforeSavePositionValidator" class="com.rhcloud.application.vehtrack.web.validators.PositionValidator"/>
+
+  <!--
+    The manual configuration (which doesn't look at the bean name) can be done by declaring the
+    event listener instance yourself. It's significantly more XML, but if you need more control:
+  -->
+  <!--
+  <bean class="org.springframework.data.rest.repository.context.ValidatingRepositoryEventListener">
+    <property name="validators">
+      <map>
+        <entry key="beforeSave">
+          <list>
+            <bean class="org.springframework.data.rest.test.webmvc.PersonValidator"/>
+          </list>
+        </entry>
+      </map>
+    </property>
+  </bean>
+  -->
+
+</beans>

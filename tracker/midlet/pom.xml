@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.rhcloud.application.vehtrack</groupId>
+        <artifactId>tracker</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <groupId>com.rhcloud.application.vehtrack.tracker</groupId>
+    <artifactId>midlet</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>Midlet</name>
+    <!--PROPERTIES###########################################################-->
+    <properties>
+        
+    </properties>
+    <!--DEPENDENCIES#########################################################-->
+    <dependencies>
+        
+        <dependency>
+            <groupId>com.rhcloud.application.vehtrack.tracker</groupId>
+            <artifactId>core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>net.sf.antenna</groupId>
+            <artifactId>antenna</artifactId>
+        </dependency>
+        
+    </dependencies>
+    <!--BUILD################################################################-->
+    <build>
+        <plugins>
+            
+            <plugin>
+                <groupId>com.pyx4me</groupId>
+                <artifactId>j2me-maven-plugin</artifactId>
+            </plugin>
+            
+        </plugins>
+    </build>
+</project>

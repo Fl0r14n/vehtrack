@@ -1,0 +1,10 @@
+MIDlet-Name: NetDemo
+MIDlet-Version: 1.0.1
+MIDlet-Vendor: Cinterion
+MIDlet-Description: Simple loopback demo for usage of socket connection
+MicroEdition-Profile: IMP-NG
+MicroEdition-Configuration: CLDC-1.1
+MIDlet-1: NetDemo, , example.netdemo.NetDemo
+MIDlet-Jar-URL: http://someserver/somedir/netdemo.jad
+MIDlet-Jar-Size: 2265
+

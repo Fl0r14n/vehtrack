@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>vehtrack</artifactId>
+        <groupId>com.rhcloud.application.vehtrack</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <groupId>com.rhcloud.application.vehtrack</groupId>
+    <artifactId>tracker</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>Tracker</name>
+    <!--MODULES##############################################################-->
+    <modules>
+        <module>midlet</module>
+        <module>core</module>
+    </modules>
+    <!--REPOSITORIES#########################################################-->
+    <repositories>
+        
+    </repositories>
+    <!--PROPERTIES###########################################################-->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <source.version>1.3</source.version>
+        <java.version>1.1</java.version>
+        <j2me.version>2.0.2</j2me.version>
+        <wtk.home>${project.build.directory}/../../../_lib/TC65i_WTK_linux/WTK</wtk.home>
+        <proguard.version>4.4</proguard.version>
+        <wtk.midpapi>1.0</wtk.midpapi>
+    </properties>
+    <!--DEPENDENCIES#########################################################-->
+    <dependencies>
+        <!--
+        Obs. First need to generate artifact from classes.zip in wtk dir
+        -->
+        <dependency>
+            <groupId>com.rhcloud.application.vehtrack.tracker.wtk</groupId>
+            <artifactId>tc65</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        
+    </dependencies>
+    <!--OPTIONAL DEPENDENCIES################################################-->
+    <dependencyManagement> 
+        
+        <dependencies>
+            <dependency>
+                <groupId>net.sf.antenna</groupId>
+                <artifactId>antenna</artifactId>
+                <version>1.0.2</version>                
+                <scope>provided</scope>
+            </dependency>
+            
+        </dependencies>   
+    </dependencyManagement>
+    <!--BUILD################################################################-->
+    <build>
+        <plugins>
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.0</version>
+                <configuration>
+                    <source>${source.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            
+        </plugins>
+        <pluginManagement>
+            <plugins>
+                
+                <!-- Create application loadable on the phone -->
+                <plugin>
+                    <groupId>com.pyx4me</groupId>
+                    <artifactId>j2me-maven-plugin</artifactId>
+                    <version>2.0.4</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>package</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <wtkHome>${wtk.home}</wtkHome>
+                        <j2meConfiguration>CLDC-1.1</j2meConfiguration>
+                        <j2meProfile>MIDP-2.0</j2meProfile>
+                        <proguard>true</proguard>
+                        <proguardVersion>${proguard.version}</proguardVersion>
+                        <proguardPreverify>true</proguardPreverify>
+                        <obfuscate>true</obfuscate>                    
+                        <midletVendor>com.rhcloud.application</midletVendor>
+                        <jadAttributes>                        
+                            <Created-By>Florian Chis</Created-By>                        
+                        </jadAttributes>
+                        <midlets>
+                            <MIDlet>
+                                <name>VehTrack</name>
+                                <class>VehicleTrackerClient</class>                            
+                            </MIDlet>
+                        </midlets>
+                        <useWtkLibs>false</useWtkLibs>
+                        <proguardOptions>
+                            <options>
+                                <option>-dontusemixedcaseclassnames</option>
+                                <option>-defaultpackage ''</option>
+                                <option>-overloadaggressively</option>
+                                <option>-keep public class ** extends javax.microedition.midlet.MIDlet { public *; }</option>
+                            </options>
+                        </proguardOptions>
+                    
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>net.sf.proguard</groupId>
+                            <artifactId>proguard</artifactId>
+                            <version>${proguard.version}</version>
+                            <scope>runtime</scope>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                
+            </plugins>
+        </pluginManagement>
+    </build>
+    <!--PROFILES#############################################################-->
+    <profiles>
+        
+    </profiles>
+</project>
