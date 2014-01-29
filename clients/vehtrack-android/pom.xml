@@ -17,9 +17,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <source.version>1.6</source.version>
         <java.version>1.6</java.version>
-        <android.plugin.version>3.6.0</android.plugin.version>
+        <android.plugin.version>3.7.0</android.plugin.version>
         <platform.version>4.1.1.4</platform.version>
-        <android.sdk.path>/opt/adt-bundle-linux-x86_64-20130729/sdk</android.sdk.path>
+        <android.sdk.path>/opt/adt-bundle-linux-x86_64-20131030/sdk</android.sdk.path>
     </properties>
 
     <dependencyManagement>
