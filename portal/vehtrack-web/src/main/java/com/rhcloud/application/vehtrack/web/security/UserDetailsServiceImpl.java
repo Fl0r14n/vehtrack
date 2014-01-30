@@ -7,7 +7,9 @@ import com.rhcloud.application.vehtrack.domain.ROLE;
 import com.rhcloud.application.vehtrack.domain.User;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.GrantedAuthority;
@@ -36,7 +38,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         } else if (account.getLocked()) {
             throw new LockedException(login);
         }
-        List<ROLE> roles = account.getRoles();
+        Set<ROLE> roles = account.getRoles();
         List<GrantedAuthority> auths = new ArrayList<>(roles.size());
         for (ROLE role : roles) {
             auths.add(new SimpleGrantedAuthority(role.name()));
@@ -57,7 +59,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                         account.setLogin(admin);
 //                        account.setPassword(new Md5PasswordEncoder().encodePassword(password, null));
                         account.setPassword(password);
-                        account.setRoles(Arrays.asList(ROLE.ADMIN));
+                        account.setRoles(new HashSet<>(Arrays.asList(ROLE.ADMIN)));
                         accountRepo.save(account);
                     }
                 }

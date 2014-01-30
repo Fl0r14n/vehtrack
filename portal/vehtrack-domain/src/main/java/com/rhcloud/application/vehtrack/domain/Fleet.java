@@ -1,6 +1,6 @@
-package com.rhcloud.application.vehtrack.domain;
+    package com.rhcloud.application.vehtrack.domain;
 
-import java.util.List;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,18 +21,18 @@ public class Fleet {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "fleet_id")
     private Long id;
     
     @Column(name = "name", nullable = false)
     private String name;
     
-    @ManyToMany
-    private List<User> users;
+    @ManyToMany(mappedBy = "fleets")
+    private Set<User> users;
     
-    @ManyToMany
-    private List<Device> devices;
+    @ManyToMany(mappedBy = "fleets")
+    private Set<Device> devices;
     
-    @OneToMany
-    List<Fleet> subFeets;
+    @OneToMany(orphanRemoval = true)
+    Set<Fleet> subFeets;        
 }

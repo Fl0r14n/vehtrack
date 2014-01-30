@@ -21,7 +21,7 @@ public class Position extends SampledPoint {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "position_id")
     private Long id;
     
     @ManyToOne

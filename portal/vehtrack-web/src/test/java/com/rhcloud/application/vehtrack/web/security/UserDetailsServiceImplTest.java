@@ -4,21 +4,22 @@ import com.rhcloud.application.vehtrack.dao.repository.AccountRepository;
 import com.rhcloud.application.vehtrack.domain.Account;
 import com.rhcloud.application.vehtrack.domain.ROLE;
 import java.util.Arrays;
+import java.util.HashSet;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import static org.junit.Assert.*;
 import org.junit.Ignore;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.test.context.ContextConfiguration;
 
 @Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath*:repository-context.xml")
+@ContextConfiguration(locations = "classpath:repository-context.xml")
 public class UserDetailsServiceImplTest {
     
     UserDetailsService userDetailsService;
@@ -31,12 +32,12 @@ public class UserDetailsServiceImplTest {
         {
             expected.setLogin(login);            
             expected.setPassword(password);
-            expected.setRoles(Arrays.asList(ROLE.ADMIN));
+            expected.setRoles(new HashSet<>(Arrays.asList(ROLE.ADMIN)));
         }
         accountRepo.save(expected);
     }
-    private String login = "foo";
-    private String password = "bar";
+    private final String login = "foo";
+    private final String password = "bar";
     private Account expected;
     
     @After

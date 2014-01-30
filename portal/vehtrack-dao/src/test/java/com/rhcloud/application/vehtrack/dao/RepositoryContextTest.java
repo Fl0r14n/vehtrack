@@ -14,7 +14,7 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class RepositoryContextIT {
+public class RepositoryContextTest {
 
     @Test
     public void context_and_repositories_should_exist() {

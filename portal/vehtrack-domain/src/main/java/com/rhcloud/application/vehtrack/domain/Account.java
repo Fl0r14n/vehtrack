@@ -1,7 +1,7 @@
 package com.rhcloud.application.vehtrack.domain;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -23,15 +23,15 @@ public class Account implements Serializable {
     @Id
     @Column(name = "login", nullable = false)
     private String login;
-    
+
     @Column(name = "password", nullable = false)
     private String password;
-    
+
     @Column(name = "locked")
     private Boolean locked = false;
-    
+
     @Enumerated(EnumType.STRING)
     @ElementCollection(fetch = FetchType.EAGER, targetClass = ROLE.class)
     @Column(name = "roles", nullable = false)
-    private List<ROLE> roles;
+    private Set<ROLE> roles;
 }

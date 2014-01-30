@@ -8,9 +8,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
-import org.junit.Ignore;
 
-@Ignore
 public class ApplicationConfigTest {
 
     @Test

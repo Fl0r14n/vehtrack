@@ -59,7 +59,8 @@ public class DBConfig {
             factory.setJpaVendorAdapter(vendorAdapter);
             factory.setPersistenceUnitName("vehtrack");
             factory.setPersistenceXmlLocation("classpath:/META-INF/persistence.xml");
-            factory.setDataSource(dataSource());
+            factory.setDataSource(dataSource());            
+            //factory.setPackagesToScan("com.rhcloud.application.vehtrack.domain");
             factory.afterPropertiesSet();
         }
         return factory.getObject();

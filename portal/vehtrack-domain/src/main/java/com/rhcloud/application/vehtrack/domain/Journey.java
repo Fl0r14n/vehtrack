@@ -2,6 +2,7 @@ package com.rhcloud.application.vehtrack.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Set;
 import java.util.List;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -27,7 +28,7 @@ public class Journey implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "journey_id")
     private Long id;
     
     @Embedded
@@ -62,9 +63,9 @@ public class Journey implements Serializable {
     @JoinColumn(name = "device_id", nullable = false)
     private Device device;
     
-    @OneToMany
+    @OneToMany(orphanRemoval = false) //allowed only when device is deleted
     private List<Position> positions;
     
-    @OneToMany
+    @OneToMany(orphanRemoval = false) //allowed only when device is deleted
     private List<Event> events;
 }
