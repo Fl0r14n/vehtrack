@@ -1,5 +1,6 @@
 package com.rhcloud.application.vehtrack.domain;
 
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -40,5 +41,5 @@ public class User {
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "users_fleets", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "fleet_id"))
-    private Set<Fleet> fleets;
+    private Set<Fleet> fleets = new HashSet<>();
 }

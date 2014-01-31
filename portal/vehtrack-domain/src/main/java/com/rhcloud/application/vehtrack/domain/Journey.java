@@ -2,7 +2,6 @@ package com.rhcloud.application.vehtrack.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Set;
 import java.util.List;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -30,7 +29,7 @@ public class Journey implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "journey_id")
     private Long id;
-    
+
     @Embedded
     @AttributeOverrides({
         @AttributeOverride(name = "recordedTimestamp", column = @Column(name = "start_timestamp")),
@@ -38,7 +37,7 @@ public class Journey implements Serializable {
         @AttributeOverride(name = "longitude", column = @Column(name = "start_longitude"))
     })
     private SampledPoint startPoint;
-    
+
     @Embedded
     @AttributeOverrides({
         @AttributeOverride(name = "recordedTimestamp", column = @Column(name = "stop_timestamp")),
@@ -46,26 +45,26 @@ public class Journey implements Serializable {
         @AttributeOverride(name = "longitude", column = @Column(name = "stop_longitude"))
     })
     private SampledPoint stopPoint;
-    
+
     @Column(name = "distance")
     private BigDecimal distance;
-    
+
     @Column(name = "avg_speed")
     private BigDecimal avgSpeed;
-    
+
     @Column(name = "max_speed")
     private BigDecimal maxSpeed;
-    
+
     @Column(name = "duration")
     private Long duration;
-    
+
     @ManyToOne
     @JoinColumn(name = "device_id", nullable = false)
     private Device device;
-    
+
     @OneToMany(orphanRemoval = false) //allowed only when device is deleted
     private List<Position> positions;
-    
+
     @OneToMany(orphanRemoval = false) //allowed only when device is deleted
     private List<Event> events;
 }

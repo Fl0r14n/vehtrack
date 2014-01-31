@@ -3,7 +3,6 @@ package com.rhcloud.application.vehtrack.dao.repository;
 import com.rhcloud.application.vehtrack.domain.Account;
 import com.rhcloud.application.vehtrack.domain.Device;
 import com.rhcloud.application.vehtrack.domain.Event;
-import com.rhcloud.application.vehtrack.domain.Fleet;
 import com.rhcloud.application.vehtrack.domain.ROLE;
 import java.util.Arrays;
 import java.util.Date;
@@ -52,7 +51,6 @@ public class EventRepositoryTest {
             device.setAccount(account);
             device.setSerial("foo");
             device.setEmail("bar");
-            device.setFleets(new HashSet<Fleet>());
         }
         device = deviceRepo.save(device);
         Event expected = new Event();
@@ -64,7 +62,6 @@ public class EventRepositoryTest {
         }
         eventRepo.save(expected);
         Event actual = eventRepo.findOne(1L);
-        //assertEquals(expected, actual); it calls equals and fetches lazy and if nothing is there we have a problem
         assertEquals(expected.getRecordedTimestamp(), actual.getRecordedTimestamp());
     }
 }

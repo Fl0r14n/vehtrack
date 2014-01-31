@@ -1,6 +1,7 @@
 package com.rhcloud.application.vehtrack.domain;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -73,5 +74,5 @@ public class Device implements Serializable {
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "devices_fleets", joinColumns = @JoinColumn(name = "device_id"), inverseJoinColumns = @JoinColumn(name = "fleet_id"))
-    private Set<Fleet> fleets;
+    private Set<Fleet> fleets = new HashSet<>();
 }

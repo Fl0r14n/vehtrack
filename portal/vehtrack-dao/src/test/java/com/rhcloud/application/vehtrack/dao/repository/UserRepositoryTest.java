@@ -1,7 +1,6 @@
 package com.rhcloud.application.vehtrack.dao.repository;
 
 import com.rhcloud.application.vehtrack.domain.Account;
-import com.rhcloud.application.vehtrack.domain.Fleet;
 import com.rhcloud.application.vehtrack.domain.ROLE;
 import com.rhcloud.application.vehtrack.domain.User;
 import java.util.Arrays;
@@ -48,7 +47,6 @@ public class UserRepositoryTest {
             expected.setAccount(account);
             expected.setEmail("admin@vehtrack.com");
             expected.setName("Administrator");
-            expected.setFleets(new HashSet<Fleet>());
         }
         userRepository.save(expected);
 
