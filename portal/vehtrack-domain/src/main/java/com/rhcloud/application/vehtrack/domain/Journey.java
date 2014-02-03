@@ -36,7 +36,7 @@ public class Journey implements Serializable {
         @AttributeOverride(name = "latitude", column = @Column(name = "start_latitude")),
         @AttributeOverride(name = "longitude", column = @Column(name = "start_longitude"))
     })
-    private SampledPoint startPoint;
+    private TimestampPoint startPoint;
 
     @Embedded
     @AttributeOverrides({
@@ -44,19 +44,19 @@ public class Journey implements Serializable {
         @AttributeOverride(name = "latitude", column = @Column(name = "stop_latitude")),
         @AttributeOverride(name = "longitude", column = @Column(name = "stop_longitude"))
     })
-    private SampledPoint stopPoint;
+    private TimestampPoint stopPoint;
 
     @Column(name = "distance")
-    private BigDecimal distance;
+    private BigDecimal distance; //m
 
     @Column(name = "avg_speed")
-    private BigDecimal avgSpeed;
+    private BigDecimal avgSpeed; //km/h
 
     @Column(name = "max_speed")
-    private BigDecimal maxSpeed;
+    private BigDecimal maxSpeed; //km/h
 
     @Column(name = "duration")
-    private Long duration;
+    private Long duration; //ms
 
     @ManyToOne
     @JoinColumn(name = "device_id", nullable = false)

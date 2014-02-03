@@ -16,8 +16,8 @@ import lombok.Data;
 public class Point implements Serializable {
 
     @Column(name = "latitude")
-    private BigDecimal latitude;
+    private BigDecimal latitude; //gg.ggggg
     
     @Column(name = "longitude")
-    private BigDecimal longitude;
+    private BigDecimal longitude; //gg.ggggg
 }

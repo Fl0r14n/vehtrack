@@ -17,7 +17,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "positions")
-public class Position extends SampledPoint {
+public class Position extends TimestampPoint {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,13 +25,13 @@ public class Position extends SampledPoint {
     private Long id;
     
     @ManyToOne
+    @JoinColumn(name = "device_id", nullable = false)
+    private Device device;
+    
+    @ManyToOne
     @JoinColumn(name = "journey_id", nullable = true)
     private Journey journey;
     
     @Column(name = "speed")
-    private BigDecimal speed;
-    
-    @ManyToOne
-    @JoinColumn(name = "device_id", nullable = false)
-    private Device device;
+    private BigDecimal speed; //km/h
 }
