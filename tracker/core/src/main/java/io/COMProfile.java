@@ -2,7 +2,6 @@ package io;
 
 /**
  * Descibes a serial com connection and parameters
- * @author Florian Chis
  */
 public class COMProfile implements ConnectionProfile {
 

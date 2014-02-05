@@ -5,7 +5,6 @@ import util.Log;
 
 /**
  * Class used for network registration
- * @author Florian Chis
  */
 public class ATNetwork {
     

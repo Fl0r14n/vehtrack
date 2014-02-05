@@ -4,7 +4,6 @@ import java.util.Vector;
 
 /**
  * Queue implementation
- * @author Florian Chis
  */
 public class Queue {
 

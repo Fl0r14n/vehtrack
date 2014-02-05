@@ -7,7 +7,6 @@ import util.Log;
 
 /**
  * Class that handles TCP connections.
- * @author Florian Chis
  */
 public class TCPConnection extends Connection {
 

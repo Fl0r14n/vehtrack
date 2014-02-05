@@ -2,7 +2,6 @@ package lib.gps;
 
 /**
  * Location info model bases on GGA & RMC sentences
- * @author Chis Florian
  */
 public class Location {
 

@@ -4,8 +4,6 @@ import java.util.Date;
 
 /**
  * Debug class
- *
- * @author Florian Chis
  */
 public class Log {
 

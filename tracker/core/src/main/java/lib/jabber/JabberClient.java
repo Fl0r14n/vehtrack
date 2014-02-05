@@ -12,8 +12,7 @@ import util.Log;
 import util.MD5;
 
 /**
- * a Jabber client implementation. Plain, MD5 and GOOGLE_TOKEN (for gtalk) auth supported
- * @author Florian Chis
+ * A Jabber client implementation. Plain, MD5 and GOOGLE_TOKEN (for gtalk) auth supported
  */
 public class JabberClient implements Runnable {
 

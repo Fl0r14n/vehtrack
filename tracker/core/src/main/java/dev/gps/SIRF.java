@@ -11,8 +11,6 @@ import util.Hex;
 
 /**
  * General SIRF based GPS modules
- *
- * @author Florian Chis
  */
 public class SIRF implements GPSDevice {
 

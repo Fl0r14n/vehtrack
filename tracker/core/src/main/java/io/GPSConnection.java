@@ -4,7 +4,6 @@ import dev.gps.GPSDevice;
 
 /**
  * Class that works with external GPS devices
- * @author Florian Chis
  */
 public class GPSConnection extends DeviceConnection {
     

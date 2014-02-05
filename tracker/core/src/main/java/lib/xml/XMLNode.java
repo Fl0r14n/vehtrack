@@ -6,7 +6,6 @@ import java.util.Vector;
 
 /**
  * A XML Node representation model
- * @author Florian Chis
  */
 public class XMLNode {
 

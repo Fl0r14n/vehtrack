@@ -11,7 +11,6 @@ import util.Log;
 
 /**
  * Class interacts with TC65i's GPIO pins (using TC65i's low level classes)
- * @author Florian Chis
  */
 public class GPIOConnectionI extends Connection {
     

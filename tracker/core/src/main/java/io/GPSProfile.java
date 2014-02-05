@@ -6,7 +6,6 @@ package io;
 
 /**
  * Profile class for external GPS devices
- * @author Florian Chis
  */
 public class GPSProfile extends COMProfile {
     

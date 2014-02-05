@@ -4,7 +4,6 @@ import dev.Device;
 
 /**
  * Interface describing a GPS device
- * @author Florian Chis
  */
 public interface GPSDevice extends Device {
     

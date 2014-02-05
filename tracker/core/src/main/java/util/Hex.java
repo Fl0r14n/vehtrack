@@ -4,7 +4,6 @@ import java.io.ByteArrayOutputStream;
 
 /**
  * Useful class for conversion between bytes and HEX chars
- * @author Florian Chis
  */
 public final class Hex {
 
@@ -15,7 +14,7 @@ public final class Hex {
      * @param len length
      * @return String representation of byte array argument
      */
-    public static String doHexCharsArray(byte[] b, int offset, int len) {
+    public static String toHexCharsArray(byte[] b, int offset, int len) {
         buf = new StringBuffer();
         for (i = offset; i < len; i++) {
             buf.append(toHexChar((b[i] >> 4) & 0x0F)).append(toHexChar(b[i] & 0x0F));
@@ -30,8 +29,8 @@ public final class Hex {
      * @param b byte array data
      * @return String representation of b
      */
-    public static String doHexCharsArray(byte[] b) {
-        return doHexCharsArray(b, 0, b.length);
+    public static String toHexCharsArray(byte[] b) {
+        return toHexCharsArray(b, 0, b.length);
     }
 
     /**
@@ -39,7 +38,7 @@ public final class Hex {
      * @param stream String as hex chars
      * @return byte array
      */
-    public static byte[] doHexBytesArray(String stream) {
+    public static byte[] toHexBytesArray(String stream) {
         baos.reset();
         j = 0;
         try {

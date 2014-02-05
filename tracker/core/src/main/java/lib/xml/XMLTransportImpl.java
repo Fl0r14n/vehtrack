@@ -9,7 +9,6 @@ import util.Log;
 /**
  * XML Transport implementation <br>
  * Supports both XMPP and SOAP
- * @author Florian Chis
  */
 public class XMLTransportImpl implements XMLTransport {
 

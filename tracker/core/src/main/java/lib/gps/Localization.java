@@ -14,7 +14,6 @@ import util.MD5;
 
 /**
  * Location based system. Also NTRIP function is implemented
- * @author Florian Chis
  */
 public class Localization {
 

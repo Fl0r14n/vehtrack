@@ -4,7 +4,6 @@ import dev.Device;
 
 /**
  * Generic device connection
- * @author Florian Chis
  */
 class DeviceConnection extends Connection {
 

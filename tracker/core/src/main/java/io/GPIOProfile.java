@@ -2,7 +2,6 @@ package io;
 
 /**
  * Profile class for GPIOConnection
- * @author Florian Chis
  */
 public class GPIOProfile implements ConnectionProfile {
 

@@ -4,7 +4,6 @@ import io.TCPProfile;
 
 /**
  * Profile class for the JabberClient
- * @author Florian Chis
  */
 public class JabberProfile extends TCPProfile {
 

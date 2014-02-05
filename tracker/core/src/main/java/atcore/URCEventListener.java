@@ -4,7 +4,6 @@ import java.util.Vector;
 
 /**
  * Terminal's event URC codes
- * @author Florian Chis
  */
 public abstract class URCEventListener {
 

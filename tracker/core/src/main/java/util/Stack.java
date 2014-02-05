@@ -4,7 +4,6 @@ import java.util.Vector;
 
 /**
  * Stack implementation
- * @author Florian Chis
  */
 public class Stack {
 

@@ -13,6 +13,7 @@ import com.rhcloud.application.vehtrack.domain.Device;
 import com.rhcloud.application.vehtrack.domain.Event;
 import com.rhcloud.application.vehtrack.domain.Fleet;
 import com.rhcloud.application.vehtrack.domain.Journey;
+import com.rhcloud.application.vehtrack.domain.LEVEL;
 import com.rhcloud.application.vehtrack.domain.Point;
 import com.rhcloud.application.vehtrack.domain.Position;
 import com.rhcloud.application.vehtrack.domain.ROLE;
@@ -50,15 +51,14 @@ public class DataGeneratorIT {
     private static final boolean GENERATE_USERS = true;
     private static final boolean GENERATE_DEVICES = true;
     private static final boolean GENERATE_JOURNEYS = true;
-    private static final boolean GENERATE_POSITIONS = true;
-    private static final boolean GENERATE_EVENTS = true;
     private static final String ADMIN_USER = "admin";
     private static final String ADMIN_PASSWORD = "hackme";
     private static final int TOTAL_USERS = 10;
     private static final int TOTAL_DEVICES = 100;
-    private static final int MAX_JOURNEY_DEVICE = 50;
-    private static final int MAX_POSITIONS_JOURNEY = 100;
-    private static final int MAX_EVENTS_JOURNEY = 10;
+    private static final int MAX_JOURNEY_DEVICE = 30;
+    private static final int MIN_POSITIONS_JOURNEY = 5;
+    private static final int MAX_POSITIONS_JOURNEY = 50;
+    private static final int MAX_EVENTS_JOURNEY = 5;
     private static final String START_DATE = "2014-02-01";
     private static final String STOP_DATE = "2014-02-28";
 
@@ -101,7 +101,7 @@ public class DataGeneratorIT {
     }
 
     @Test
-    public void generateData() {
+    public void generateData() throws IOException {
         if (GENERATE_ADMIN) {
             generateAdminUser();
         }
@@ -120,16 +120,6 @@ public class DataGeneratorIT {
             Iterable<Journey> journeys = null;
             if (GENERATE_JOURNEYS) {
                 journeys = generateJourneysForDevice(device);
-            }
-            if (journeys != null) {
-                for (Journey journey : journeys) {
-                    if (GENERATE_POSITIONS) {
-                        generatePositions(device, journey);
-                    }
-                    if (GENERATE_EVENTS) {
-                        generateEvents(device, journey);
-                    }
-                }
             }
         }
     }
@@ -226,21 +216,13 @@ public class DataGeneratorIT {
         }
     }
 
-    public Iterable<Journey> generateJourneysForDevice(Device device) {
+    public Iterable<Journey> generateJourneysForDevice(Device device) throws IOException {
         L.info("Generating journeys for device " + device.getSerial() + "====");
         int totalJourneys = random.nextInt(MAX_JOURNEY_DEVICE);
         List<Journey> journeys = new ArrayList<>(totalJourneys);
         for (int i = 0; i < totalJourneys; i++) {
             //TODO
-            Journey journey = new Journey();
-            {
-                journey.setDevice(device);
-                journey.setStartPoint(null);
-                journey.setStopPoint(null);
-                journey.setDistance(BigDecimal.ZERO);
-                journey.setAvgSpeed(BigDecimal.ZERO);
-                journey.setMaxSpeed(BigDecimal.ZERO);
-            }
+            Journey journey = generateJourney(device, startDate, null, null);
             L.debug(journey.toString());
             journeys.add(journey);
         }
@@ -248,46 +230,6 @@ public class DataGeneratorIT {
             return journeyRepository.save(journeys);
         } else {
             return journeys;
-        }
-    }
-
-    public Iterable<Position> generatePositions(Device device, Journey journey) {
-        L.info("Generating positions for device " + device.getSerial() + " and journey " + journey.getId() + "====");
-        int totalPositions = random.nextInt(MAX_POSITIONS_JOURNEY);
-        List<Position> positions = new ArrayList<>(totalPositions);
-        for (int i = 0; i < totalPositions; i++) {
-            //TODO
-            Position position = new Position();
-            {
-
-            }
-            L.debug(position.toString());
-            positions.add(position);
-        }
-        if (WRITE_TO_DATABASE) {
-            return positionRepository.save(positions);
-        } else {
-            return positions;
-        }
-    }
-
-    public Iterable<Event> generateEvents(Device device, Journey journey) {
-        L.info("Generating events for device " + device.getSerial() + " and journey " + journey.getId() + "====");
-        int totalEvents = random.nextInt(MAX_EVENTS_JOURNEY);
-        List<Event> events = new ArrayList<>(totalEvents);
-        for (int i = 0; i < totalEvents; i++) {
-            //TODO
-            Event event = new Event();
-            {
-
-            }
-            L.debug(event.toString());
-            events.add(event);
-        }
-        if (WRITE_TO_DATABASE) {
-            return eventRepository.save(events);
-        } else {
-            return events;
         }
     }
 
@@ -301,30 +243,31 @@ public class DataGeneratorIT {
         ROLE[] roles = {ROLE.FLEET_ADMIN, ROLE.USER};
         return roles[i % roles.length];
     }
-    
+
     public Journey generateJourney(Device device, Date startDate, Point start, Point stop) throws IOException {
         KML kml = yourNavigationOrg.getKML(start, stop);
 
+        //generate positions
         Double distance = kml.getDocument().getDistance(); //km
         Long traveltime = kml.getDocument().getTraveltime(); //sec
-        String[] stringPoints = kml.getDocument().getFolder().getPlacemark().getLineString().getCoordinates().split(" ");
-        List<Position> positions = new ArrayList<>(stringPoints.length);
-        for (String stringPoint : stringPoints) {
-            String[] latLng = stringPoint.split(",");
-            Position position = new Position();
-            {
-                position.setDevice(device);
-                //TODO calculate here
-                position.setTimestamp(startDate);
-                position.setLongitude(BigDecimal.valueOf(Double.parseDouble(latLng[0])));
-                position.setLatitude(BigDecimal.valueOf(Double.parseDouble(latLng[1])));
-                position.setSpeed(null);
-            }
-            positions.add(position);
+
+        List<Position> positions = getPositionsFromKML(kml);
+        positions = trimPositions(positions);
+        Long timeStep = traveltime/positions.size();
+        Long timestamp = startDate.getTime();        
+        Point lastPoint = start;
+        for (Position position : positions) {
+            position.setDevice(device);
+            position.setTimestamp(new Date(timestamp));
+            position.setSpeed(calculateDistance(lastPoint, position).divide(BigDecimal.valueOf(timeStep)));
+            //increment stuff
+            timestamp+=timeStep;
         }
+
         if (WRITE_TO_DATABASE) {
             positions = (List<Position>) positionRepository.save(positions);
         }
+        //generate journey
         Journey journey = new Journey();
         {
             journey.setDevice(device);
@@ -332,14 +275,78 @@ public class DataGeneratorIT {
             journey.setDistance(BigDecimal.valueOf(distance * 1000)); //m
             journey.setAvgSpeed(BigDecimal.valueOf(distance / traveltime)); //km/h
             journey.setMaxSpeed(journey.getAvgSpeed().add(BigDecimal.valueOf(30))); //+30km/h
-
             journey.setStartPoint(positions.get(0));
             journey.setStopPoint(positions.get(positions.size() - 1));
             journey.setPositions(positions);
+            journey.setEvents((List<Event>) generateEventsForJourney(device));
         }
         if (WRITE_TO_DATABASE) {
             journey = journeyRepository.save(journey);
         }
         return journey;
+    }
+
+    private List<Position> getPositionsFromKML(KML kml) {
+        String[] stringPoints = kml.getDocument().getFolder().getPlacemark().getLineString().getCoordinates().split(" ");
+        List<Position> points = new ArrayList<>(stringPoints.length);
+        for (String stringPoint : stringPoints) {
+            String[] latLng = stringPoint.split(",");
+            double latitude = Double.parseDouble(latLng[1]);
+            double longitude = Double.parseDouble(latLng[0]);
+            Position point = new Position();
+            {
+                point.setLatitude(BigDecimal.valueOf(latitude));
+                point.setLongitude(BigDecimal.valueOf(longitude));
+            }
+            points.add(point);
+        }
+        return points;
+    }
+
+    private List<Position> trimPositions(List<Position> positions) {
+        int totalPositions = MIN_POSITIONS_JOURNEY + random.nextInt(MAX_POSITIONS_JOURNEY);
+        if (positions.size() > totalPositions) {
+            int removeStep = positions.size() / totalPositions;
+            if (removeStep > 0) {
+                List<Position> result = new ArrayList<>();
+                int i = 0;
+                for (Position position : positions) {
+                    if ((i % removeStep) != 0) {
+                        result.add(position);
+                    }
+                    i++;
+                }
+                return result;
+            }
+        }
+        return positions;
+    }
+    
+    private BigDecimal calculateDistance(Point a, Point b) {
+        //TODO
+        return null;
+    }
+    
+    public Iterable<Event> generateEventsForJourney(Device device) {
+        L.info("Generating events for device " + device.getSerial() + "======");
+        int totalEvents = random.nextInt(MAX_EVENTS_JOURNEY);
+        List<Event> events = new ArrayList<>(totalEvents);
+        for (int i = 0; i < totalEvents; i++) {
+            //TODO
+            Event event = new Event();
+            {
+                event.setDevice(device);
+                //TODO
+                event.setType(LEVEL.WARN);
+                event.setMessage("WARNING!");
+            }
+            L.debug(event.toString());
+            events.add(event);
+        }
+        if (WRITE_TO_DATABASE) {
+            return eventRepository.save(events);
+        } else {
+            return events;
+        }
     }
 }

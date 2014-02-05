@@ -6,7 +6,6 @@ import util.Log;
 
 /**
  * Class for system features. Main functions of TC65
- * @author Florian Chis
  */
 public class ATSystem {
 

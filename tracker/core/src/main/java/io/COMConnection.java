@@ -8,7 +8,6 @@ import util.Log;
 
 /**
  * Class that handles serial connections
- * @author Florian Chis
  */
 public class COMConnection extends Connection {
     

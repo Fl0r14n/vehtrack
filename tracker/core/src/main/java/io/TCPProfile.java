@@ -2,7 +2,6 @@ package io;
 
 /**
  * Profile class for TCPConnection
- * @author Florian Chis
  */
 public class TCPProfile implements ConnectionProfile {
 

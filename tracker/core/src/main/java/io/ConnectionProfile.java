@@ -2,7 +2,6 @@ package io;
 
 /**
  * Here the connection profile is to be set
- * @author Florian Chis
  */
 public interface ConnectionProfile {
 

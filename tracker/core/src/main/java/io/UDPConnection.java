@@ -10,7 +10,6 @@ import util.Log;
 
 /**
  * Class that handles UDP connections
- * @author Florian Chis
  */
 public class UDPConnection extends Connection {
 

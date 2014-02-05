@@ -5,7 +5,6 @@ import java.io.OutputStream;
 
 /**
  * Defines basic io operations
- * @author Florian Chis
  */
 public abstract class Connection {
 

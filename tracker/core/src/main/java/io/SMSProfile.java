@@ -2,7 +2,6 @@ package io;
 
 /**
  * Profile class for SMSConnection
- * @author Florian Chis
  */
 public class SMSProfile implements ConnectionProfile {
 

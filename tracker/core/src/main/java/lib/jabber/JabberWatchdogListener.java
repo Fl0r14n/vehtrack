@@ -2,7 +2,6 @@ package lib.jabber;
 
 /**
  * Jabber Watchdog interface
- * @author Florian Chis
  */
 public interface JabberWatchdogListener {
 

@@ -9,7 +9,6 @@ import util.Log;
 
 /**
  * Class for sending AT commands
- * @author Florian Chis
  */
 public class ATClass {
     

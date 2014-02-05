@@ -5,7 +5,6 @@ import io.ConnectionProfile;
 
 /**
  * Describes a generic device interface
- * @author Florian Chis
  */
 public interface Device {
 

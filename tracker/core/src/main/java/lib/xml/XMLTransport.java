@@ -4,7 +4,6 @@ import java.io.IOException;
 
 /**
  * A simple trasport interface for XML stanzas
- * @author Florian Chis
  */
 public interface XMLTransport {
 

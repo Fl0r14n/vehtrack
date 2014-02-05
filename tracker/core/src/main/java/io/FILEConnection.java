@@ -8,7 +8,6 @@ import util.Log;
 
 /**
  * Class for accesing unit's flash file system
- * @author Florian Chis
  */
 public class FILEConnection extends Connection {
 

@@ -24,7 +24,7 @@ import util.Queue;
 
 public class VehicleTrackerClient extends MIDlet {
 
-    public static final String VERSION = "VehicleTrackerClient ver.0.0.1 build 12.01.28 ( c ) Florian Chis";    
+    public static final String VERSION = "";    
 
     public void startApp() {
         init();

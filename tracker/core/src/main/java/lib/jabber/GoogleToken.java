@@ -10,8 +10,6 @@ import util.MD5;
 
 /**
  * does GOOGLE-TOKEN-AUTH witch means gmail auth base from MGtalk client
- *
- * @author Florian Chis
  */
 public class GoogleToken {
 

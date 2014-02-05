@@ -2,7 +2,6 @@ package io;
 
 /**
  * Profile class for FILEConnection
- * @author Florian Chis
  */
 public class FILEProfile implements ConnectionProfile{
 

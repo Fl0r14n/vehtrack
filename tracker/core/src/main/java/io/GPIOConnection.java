@@ -11,7 +11,6 @@ import util.Log;
 
 /**
  * Class interacts with device's GPIO pins
- * @author Florian Chis
  */
 public class GPIOConnection extends Connection {
 

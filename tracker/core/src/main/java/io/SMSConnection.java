@@ -10,8 +10,6 @@ import util.Log;
 
 /**
  * Class to work with SMS connections
- *
- * @author Florian Chis
  */
 public class SMSConnection extends Connection {
 

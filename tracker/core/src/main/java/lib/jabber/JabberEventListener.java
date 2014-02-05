@@ -5,7 +5,6 @@ import lib.xml.XMLTransport;
 
 /**
  * Abstract class describes common jabber events
- * @author Florian Chis
  */
 public abstract class JabberEventListener {
 
