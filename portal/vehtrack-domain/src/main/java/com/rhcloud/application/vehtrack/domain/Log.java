@@ -21,17 +21,17 @@ import lombok.Data;
  */
 @Data
 @Entity
-@Table(name = "events")
-public class Event implements Serializable {
+@Table(name = "logs")
+public class Log implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "event_id")
+    @Column(name = "log_id")
     private Long id;
     
-    @Column(name = "recorded_timestamp")
+    @Column(name = "tstamp")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date recordedTimestamp;
+    private Date timestamp;
     
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)

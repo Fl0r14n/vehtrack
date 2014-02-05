@@ -17,7 +17,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "positions")
-public class Position extends TimestampPoint {
+public class Position extends TPoint {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

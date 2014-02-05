@@ -2,7 +2,7 @@ package com.rhcloud.application.vehtrack.dao;
 
 import com.rhcloud.application.vehtrack.dao.repository.AccountRepository;
 import com.rhcloud.application.vehtrack.dao.repository.DeviceRepository;
-import com.rhcloud.application.vehtrack.dao.repository.EventRepository;
+import com.rhcloud.application.vehtrack.dao.repository.LogRepository;
 import com.rhcloud.application.vehtrack.dao.repository.FleetRepository;
 import com.rhcloud.application.vehtrack.dao.repository.JourneyRepository;
 import com.rhcloud.application.vehtrack.dao.repository.PositionRepository;
@@ -22,7 +22,7 @@ public class RepositoryContextTest {
         assertThat(context, is(notNullValue()));
         assertThat(context.getBean(AccountRepository.class), is(notNullValue()));
         assertThat(context.getBean(DeviceRepository.class), is(notNullValue()));
-        assertThat(context.getBean(EventRepository.class), is(notNullValue()));
+        assertThat(context.getBean(LogRepository.class), is(notNullValue()));
         assertThat(context.getBean(FleetRepository.class), is(notNullValue()));
         assertThat(context.getBean(JourneyRepository.class), is(notNullValue()));
         assertThat(context.getBean(PositionRepository.class), is(notNullValue()));

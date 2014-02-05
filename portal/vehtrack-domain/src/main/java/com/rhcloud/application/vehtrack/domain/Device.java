@@ -66,7 +66,7 @@ public class Device implements Serializable {
     private List<Journey> journeys;
 
     @OneToMany(orphanRemoval = true)
-    private List<Event> events;
+    private List<Log> logs;
 
     @OneToOne(orphanRemoval = true, optional = false)
     @JoinColumn(name = "account_id", unique = true, nullable = false, updatable = false)

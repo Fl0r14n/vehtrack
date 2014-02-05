@@ -1,6 +1,6 @@
 package com.rhcloud.application.vehtrack.web.config;
 
-import com.rhcloud.application.vehtrack.dao.repository.EventRepository;
+import com.rhcloud.application.vehtrack.dao.repository.LogRepository;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -15,6 +15,6 @@ public class ApplicationConfigTest {
     public void bootstrapAppFromJavaConfig() {
         ApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfig.class);
         assertThat(context, is(notNullValue()));
-        assertThat(context.getBean(EventRepository.class), is(notNullValue()));
+        assertThat(context.getBean(LogRepository.class), is(notNullValue()));
     }
 }

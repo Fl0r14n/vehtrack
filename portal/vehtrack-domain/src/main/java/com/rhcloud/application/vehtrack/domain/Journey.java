@@ -32,19 +32,19 @@ public class Journey implements Serializable {
 
     @Embedded
     @AttributeOverrides({
-        @AttributeOverride(name = "recordedTimestamp", column = @Column(name = "start_timestamp")),
+        @AttributeOverride(name = "timestamp", column = @Column(name = "start_tstamp")),
         @AttributeOverride(name = "latitude", column = @Column(name = "start_latitude")),
         @AttributeOverride(name = "longitude", column = @Column(name = "start_longitude"))
     })
-    private TimestampPoint startPoint;
+    private TPoint startPoint;
 
     @Embedded
     @AttributeOverrides({
-        @AttributeOverride(name = "recordedTimestamp", column = @Column(name = "stop_timestamp")),
+        @AttributeOverride(name = "timestamp", column = @Column(name = "stop_tstamp")),
         @AttributeOverride(name = "latitude", column = @Column(name = "stop_latitude")),
         @AttributeOverride(name = "longitude", column = @Column(name = "stop_longitude"))
     })
-    private TimestampPoint stopPoint;
+    private TPoint stopPoint;
 
     @Column(name = "distance")
     private BigDecimal distance; //m
@@ -66,5 +66,5 @@ public class Journey implements Serializable {
     private List<Position> positions;
 
     @OneToMany(orphanRemoval = false) //allowed only when device is deleted
-    private List<Event> events;
+    private List<Log> logs;
 }

@@ -9,9 +9,13 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import lombok.Data;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class YourNavigationOrg {
 
+    private static final Logger L = LoggerFactory.getLogger(YourNavigationOrg.class);
+    
     /**
      * It uses http://www.yournavigation.org/ to generate a journey
      *
@@ -21,7 +25,9 @@ public class YourNavigationOrg {
      * @throws IOException
      */
     public KML getKML(Point start, Point stop) throws IOException {
-        return execute(KML.class, buildURL(start, stop));
+        KML kml =  execute(KML.class, buildURL(start, stop));
+        L.debug(kml.toString());
+        return kml;
     }
 
     //##########################################################################
@@ -45,9 +51,11 @@ public class YourNavigationOrg {
     private String buildURL(Point start, Point stop) {
         StringBuilder buf = new StringBuilder();
         buf.append("http://www.yournavigation.org/api/dev/route.php?flat=");
-        buf.append(start.getLatitude()).append("&flon=").append(stop.getLongitude()).append("&tlat=").append(stop.getLatitude()).append("&tlon=").append(stop.getLongitude());
+        buf.append(start.getLatitude()).append("&flon=").append(start.getLongitude()).append("&tlat=").append(stop.getLatitude()).append("&tlon=").append(stop.getLongitude());
         buf.append("&v=motorcar&fast=1&layer=mapnik&instructions=0");
-        return buf.toString();
+        String result =  buf.toString();
+        L.debug(result);
+        return result;
     }
 
     @Data

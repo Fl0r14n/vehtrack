@@ -14,9 +14,9 @@ import lombok.Data;
 @Data
 @Embeddable
 @MappedSuperclass
-public class TimestampPoint extends Point {
+public class TPoint extends Point {
     
-    @Column(name = "recorded_timestamp")
+    @Column(name = "tstamp")
     @Temporal(TemporalType.TIMESTAMP)
     private Date timestamp; //ms
 }
