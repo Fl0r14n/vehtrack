@@ -46,7 +46,7 @@ public class DataGeneratorIT {
 
     private static final Logger L = LoggerFactory.getLogger(DataGeneratorIT.class);
 
-    private static final boolean WRITE_TO_DATABASE = false;
+    private static final boolean WRITE_TO_DATABASE = true;
     private static final boolean GENERATE_ADMIN = false;
     private static final boolean GENERATE_USERS = true;
     private static final boolean GENERATE_DEVICES = true;
@@ -55,11 +55,11 @@ public class DataGeneratorIT {
     private static final String ADMIN_PASSWORD = "hackme";
     private static final int TOTAL_USERS = 10;
     private static final int TOTAL_DEVICES = 100;
-    private static final int MIN_POSITIONS_JOURNEY = 5;
-    private static final int MAX_POSITIONS_JOURNEY = 50;
+    private static final int MIN_POSITIONS_JOURNEY = 100;
+    private static final int MAX_POSITIONS_JOURNEY = 150;
     private static final int MAX_LOGS_JOURNEY = 5;
     private static final String START_DATE = "2014-02-01";
-    private static final String STOP_DATE = "2014-02-28";
+    private static final String STOP_DATE = "2014-05-30";
 
     @Autowired
     private AccountRepository accountRepository;
@@ -337,14 +337,15 @@ public class DataGeneratorIT {
         for (Position position : positions) {
             position.setDevice(device);
             position.setTimestamp(new Date(timestamp));
-            L.debug("Last point: " + lastPoint.getLatitude() + "," + lastPoint.getLongitude() + " Postition: " + position.getLatitude() + "," + position.getLongitude() + " Timestep: " + timeStep);
+            //L.debug("Last point: " + lastPoint.getLatitude() + "," + lastPoint.getLongitude() + " Postition: " + position.getLatitude() + "," + position.getLongitude() + " Timestep: " + timeStep);
             BigDecimal dst = calculateDistance(lastPoint, position);
-            L.debug("Distance: " + dst + " km");            
-            BigDecimal speed = dst.divide(BigDecimal.valueOf(timeStep * 3600));
-            L.debug("Speed: " + speed + " km/h");
+            //L.debug("Distance: " + dst + " km");
+            BigDecimal speed = dst.multiply(BigDecimal.valueOf(3600/timeStep));
+            //L.debug("Speed: " + speed + " km/h");            
             position.setSpeed(speed);
             //increment stuff
             timestamp += timeStep;
+            lastPoint = position;
         }
 
         if (WRITE_TO_DATABASE) {
@@ -394,21 +395,22 @@ public class DataGeneratorIT {
     }
 
     private List<Position> trimPositions(List<Position> positions) {
-        int totalPositions = MIN_POSITIONS_JOURNEY + random.nextInt(MAX_POSITIONS_JOURNEY);
+        int totalPositions = MIN_POSITIONS_JOURNEY + random.nextInt(MAX_POSITIONS_JOURNEY-MIN_POSITIONS_JOURNEY);
         if (positions.size() > totalPositions) {
             int removeStep = positions.size() / totalPositions;
             if (removeStep > 0) {
-                List<Position> result = new ArrayList<>();
+                List<Position> result = new ArrayList<>();                
                 int i = 0;
                 for (Position position : positions) {
-                    if ((i % removeStep) != 0) {
+                    if ((i % removeStep) == 0) {
                         result.add(position);
                     }
                     i++;
                 }
+                //L.debug("Initial: "+positions.size()+" After: "+result.size());
                 return result;
             }
-        }
+        }        
         return positions;
     }
 
@@ -427,7 +429,7 @@ public class DataGeneratorIT {
             Log log = new Log();
             {
                 log.setDevice(device);
-                log.setType(levels[random.nextInt() % levels.length]);
+                log.setType(levels[random.nextInt(levels.length)]);
                 log.setMessage("Message: " + log.getType().name());
             }
             L.debug(log.toString());

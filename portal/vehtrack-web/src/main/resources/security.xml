@@ -30,24 +30,24 @@
         <!--<session-management session-fixation-protection="none"/>-->
         
         
-        <intercept-url pattern="/**/journey**" access="hasAnyRole('ADMIN,FLEET_ADMIN','DEVICE,USER')" method="GET"/>
-        <intercept-url pattern="/**/journey**" access="hasAnyRole('ADMIN','DEVICE')" />
+        <intercept-url pattern="/**/journeys**" access="hasAnyRole('ADMIN','FLEET_ADMIN','DEVICE','USER')" method="GET"/>
+        <intercept-url pattern="/**/journeys**" access="hasAnyRole('ADMIN','DEVICE')" />
         
-        <intercept-url pattern="/**/position**" access="hasAnyRole('ADMIN','FLEET_ADMIN','DEVICE,USER')" method="GET"/>
-        <intercept-url pattern="/**/position**" access="hasAnyRole('ADMIN','DEVICE')" />
+        <intercept-url pattern="/**/positions**" access="hasAnyRole('ADMIN','FLEET_ADMIN','DEVICE','USER')" method="GET"/>
+        <intercept-url pattern="/**/positions**" access="hasAnyRole('ADMIN','DEVICE')" />
         
-        <intercept-url pattern="/**/event**" access="hasAnyRole('ADMIN','FLEET_ADMIN','DEVICE,USER')" method="GET"/>
-        <intercept-url pattern="/**/event**" access="hasAnyRole('ADMIN','DEVICE')" />
+        <intercept-url pattern="/**/logs**" access="hasAnyRole('ADMIN','FLEET_ADMIN','DEVICE','USER')" method="GET"/>
+        <intercept-url pattern="/**/logs**" access="hasAnyRole('ADMIN','DEVICE')" />
     
-        <intercept-url pattern="/**/fleet**" access="hasAnyRole('ADMIN','FLEET_ADMIN')" />
+        <intercept-url pattern="/**/fleets**" access="hasAnyRole('ADMIN','FLEET_ADMIN')" />
         
-        <intercept-url pattern="/**/user**" access="hasAnyRole('ADMIN','FLEET_ADMIN')" method="GET"/>
-        <intercept-url pattern="/**/user**" access="hasAnyRole('ADMIN')" />
+        <intercept-url pattern="/**/users**" access="hasAnyRole('ADMIN','FLEET_ADMIN')" method="GET"/>
+        <intercept-url pattern="/**/users**" access="hasAnyRole('ADMIN')" />
         
-        <intercept-url pattern="/**/device**" access="hasAnyRole('ADMIN','FLEET_ADMIN')" method="GET"/>
-        <intercept-url pattern="/**/device**" access="hasAnyRole('ADMIN')" />
+        <intercept-url pattern="/**/devices**" access="hasAnyRole('ADMIN','FLEET_ADMIN')" method="GET"/>
+        <intercept-url pattern="/**/devices**" access="hasAnyRole('ADMIN')" />
         
-        <intercept-url pattern="/**/account**" access="hasAnyRole('ADMIN')" />
+        <intercept-url pattern="/**/accounts**" access="hasAnyRole('ADMIN')" />
         <intercept-url pattern="/**" access="hasAnyRole('ADMIN')"/>
         
         <!--<http-basic />-->

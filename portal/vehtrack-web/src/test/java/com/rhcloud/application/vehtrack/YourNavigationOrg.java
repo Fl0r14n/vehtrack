@@ -26,7 +26,7 @@ public class YourNavigationOrg {
      */
     public KML getKML(Point start, Point stop) throws IOException {
         KML kml =  execute(KML.class, buildURL(start, stop));
-        L.debug(kml.toString());
+        //L.debug(kml.toString());
         return kml;
     }
 
