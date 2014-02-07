@@ -38,3 +38,4 @@ logs
 *.vim
 
 *.orig
+/clients/vehtrack-angular/nbproject/private/
