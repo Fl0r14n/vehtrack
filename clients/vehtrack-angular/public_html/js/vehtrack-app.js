@@ -1,7 +1,12 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+var vehtrackApp = angular.module("vehtrackApp", ["ngRoute"]);
 
-
+vehtrackApp.config(function($routeProvider) {
+    $routeProvider.
+            when("/admin", {
+                templateURL: "templates/admin.html",
+                controller: "adminController"
+            }).
+            otherwise({
+                redirectTo: "/"
+            });
+});
