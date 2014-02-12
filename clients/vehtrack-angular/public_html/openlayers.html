@@ -11,16 +11,31 @@
                 height: 100%;
                 margin: 0;
             }
+
+            .geolocateItemInactive:after,
+            .geolocateItemActive:after {
+                content: "Where am I?";
+            }
+
+            .olControlTextButtonPanel.geolocate { 
+                top: 8px;
+                left: 8px;
+                right: auto;
+            }
         </style>
         <script src="http://maps.google.com/maps/api/js?v=3&amp;sensor=false"></script>
-        <script src="libs/openlayers/OpenLayers.debug.js"></script>
+        <script src="libs/openlayers/OpenLayers.js"></script>
         <link rel="stylesheet" type="text/css" href="css/openlayers/style.css"/>
         <script>
             OpenLayers.ImgPath = "img/openlayers/";
             function init() {
-
                 map = new OpenLayers.Map('basicMap', {
+                    displayProjection: "EPSG:4326",
                     projection: "EPSG:900913",
+                    units: "meters",
+                    zoom: 5,
+                    numZoomLevels: 22,
+                    center: new OpenLayers.LonLat(10.2, 48.9).transform('EPSG:4326', 'EPSG:900913'),
                     layers: [
                         new OpenLayers.Layer.OSM(),
                         new OpenLayers.Layer.Google(
@@ -41,33 +56,131 @@
                         )
                     ],
                     controls: [
-//                        new OpenLayers.Control.Permalink('home'),
-                        //new OpenLayers.Control.OverviewMap(),
-//                        new OpenLayers.Control.Button({displayClass: "MyButton", trigger: myFunction}),
-//                        new OpenLayers.Control.Measure(),
-                        new OpenLayers.Control.Geolocate({bind: false,
-                            geolocationOptions: {
-                                enableHighAccuracy: false,
-                                maximumAge: 0,
-                                timeout: 7000
-                            }}),
                         new OpenLayers.Control.CacheRead(),
                         new OpenLayers.Control.CacheWrite(),
                         new OpenLayers.Control.Geolocate(),
-                        new OpenLayers.Control.TouchNavigation(),
+                        new OpenLayers.Control.TouchNavigation({dragPanOptions: {enableKinetic: true}}),
                         new OpenLayers.Control.Navigation(),
                         new OpenLayers.Control.LayerSwitcher(),
                         new OpenLayers.Control.ScaleLine(),
-                        new OpenLayers.Control.MousePosition({displayProjection: "EPSG:4326"}),
+                        new OpenLayers.Control.MousePosition(),
                         new OpenLayers.Control.KeyboardDefaults()
-                    ],
-                    center: new OpenLayers.LonLat(10.2, 48.9)
-                            // Google.v3 uses web mercator as projection, so we have to
-                            // transform our coordinates
-                            .transform('EPSG:4326', 'EPSG:900913'),
-                    zoom: 5
+                    ]
+                });
+                addGeolocation(map);
+                addTrack(map);
+            }
+
+            function addGeolocation(map) {
+                var geoLocateVector = new OpenLayers.Layer.Vector('geolocate');
+                map.addLayer(geoLocateVector);
+                var geolocate = new OpenLayers.Control.Geolocate({
+                    bind: false,
+                    geolocationOptions: {
+                        enableHighAccuracy: false,
+                        maximumAge: 0,
+                        timeout: 7000
+                    }});
+                geolocate.watch = true;
+                geolocate.events.register("locationupdated", geolocate, function(e) {
+                    geoLocateVector.removeAllFeatures();
+                    var circle = new OpenLayers.Feature.Vector(
+                            OpenLayers.Geometry.Polygon.createRegularPolygon(
+                                    new OpenLayers.Geometry.Point(e.point.x, e.point.y),
+                                    e.position.coords.accuracy,
+                                    40,
+                                    0
+                                    ),
+                            {},
+                            {
+                                fillColor: '#000',
+                                fillOpacity: 0.1,
+                                strokeWidth: 0
+                            }
+                    );
+                    geoLocateVector.addFeatures([
+                        new OpenLayers.Feature.Vector(
+                                e.point,
+                                {},
+                                {
+                                    graphicName: 'cross',
+                                    strokeColor: '#f00',
+                                    strokeWidth: 2,
+                                    fillOpacity: 0,
+                                    pointRadius: 10
+                                }
+                        ),
+                        circle
+                    ]);
+                    map.zoomToExtent(geoLocateVector.getDataExtent());
+                });
+                map.addControl(geolocate);
+                var findMe = new OpenLayers.Control.Button({
+                    trigger: function() {
+                        geolocate.deactivate();
+                        geolocate.activate();
+                    },
+                    displayClass: "geolocate"
+                });
+                var buttonPanel = new OpenLayers.Control.TextButtonPanel({
+                    vertical: true,
+                    additionalClass: "geolocate"
+                });
+                buttonPanel.addControls([findMe]);
+                map.addControl(buttonPanel);
+            }
+
+            function addTrack(map) {
+                var startPt = new OpenLayers.Geometry.Point(21.22218, 45.75771).transform('EPSG:4326', 'EPSG:900913');
+                var endPt = new OpenLayers.Geometry.Point(21.22575, 45.75772).transform('EPSG:4326', 'EPSG:900913');
+
+//make the line:
+                var line = new OpenLayers.Geometry.LineString([startPt, endPt]);
+
+//style
+                var style = {strokeColor: "#0500bd", strokeWidth: 3};
+//make vector 
+                var fea = new OpenLayers.Feature.Vector(line, {}, style);
+
+//make vectorLayer
+                var vec = new OpenLayers.Layer.Vector("track");
+
+//add the feature
+                vec.addFeatures([fea]);
+
+//add to map
+                map.addLayer(vec);
+            }
+
+            //search============================================================
+            function search(queryString) {
+                OpenLayers.Request.POST({
+                    url: "http://www.openrouteservice.org/php/OpenLSLUS_Geocode.php",
+                    scope: this,
+                    failure: this.requestFailure,
+                    success: this.requestSuccess,
+                    headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                    data: "FreeFormAdress=" + encodeURIComponent(queryString) + "&MaxResponse=1"
                 });
             }
+            function requestSuccess(response) {
+                var format = new OpenLayers.Format.XLS();
+                var output = format.read(response.responseXML);
+                if (output.responseLists[0]) {
+                    var geometry = output.responseLists[0].features[0].geometry;
+                    var foundPosition = new OpenLayers.LonLat(geometry.x, geometry.y).transform(
+                            new OpenLayers.Projection("EPSG:4326"),
+                            map.getProjectionObject()
+                            );
+                    map.setCenter(foundPosition, 16);
+                } else {
+                    alert("Sorry, no address found");
+                }
+            }
+            function requestFailure(response) {
+                alert("An error occurred while communicating with the OpenLS service. Please try again.");
+            }
+            //==================================================================
         </script>
     </head>
     <body onload="init();">
